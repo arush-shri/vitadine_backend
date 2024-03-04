@@ -2,13 +2,13 @@ const express = require("express");
 const { editPrice, getMenu, addItem, deleteItem } = require("./menuHandler");
 const menuRoute = express.Router();
 
-menuRoute.get('/menu', async (req, res) => {
+menuRoute.get('/getMenu', async (req, res) => {
     try {
-        if (!req.body.canteenName) {
-            return res.status(400).send("Canteen name is required.");
-        }
+        // if (!req.body.canteenName) {
+        //     return res.status(400).send("Canteen name is required.");
+        // }
         
-        const menu = await getMenu(req.body.canteenName);
+        const menu = await getMenu("ub");
         res.status(200).send(menu);
     } catch (error) {
         console.error("Error fetching menu:", error);

@@ -2,7 +2,7 @@ const { database } = require('./DBConnector');
 
 async function getMenu(canteenName){
     const canteenDB = database.collection(canteenName);
-    const result = await canteenDB.find();
+    const result = canteenDB.find().toArray();
     return result;
 }
 
