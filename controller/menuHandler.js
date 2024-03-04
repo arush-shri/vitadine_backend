@@ -51,6 +51,28 @@ async function addItem(canteenName, categoryName, foodName, price) {
     }
 }
 
+async function deleteItem(canteenName, category, itemName) {
+    try {
+        const canteenDB = database.collection(canteenName);
+        const filter = {};
+        const update = { $unset: { [`${category}.$[item].${itemName}`]: "" } };
+        
+        const options = {
+            arrayFilters: [{ 'item': { '$exists': true } }]
+        };
+        
+        const result = await canteenDB.updateOne(filter, update, options);
+        
+        if (result.modifiedCount === 1) {
+            return true;
+        }
+        
+        return false;
+    } catch (error) {
+        console.error("Error deleting item:", error);
+        return false;
+    }
+}
 
 
-module.exports = { priceEdit, getMenu, addItem }
+module.exports = { editPrice, getMenu, addItem, deleteItem }

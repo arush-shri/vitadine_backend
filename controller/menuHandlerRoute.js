@@ -1,5 +1,5 @@
 const expres = require("express");
-const { priceEdit, getMenu } = require("./menuHandler")
+const { editPrice, getMenu, addItem, deleteItem } = require("./menuHandler")
 const menuRoute = expres.Router();
 
 menuRoute.get('/menu', async (req, res) => {
@@ -8,12 +8,17 @@ menuRoute.get('/menu', async (req, res) => {
 })
 
 menuRoute.post('/editPrice', async (req, res) => {
-    const menu = await getMenu(req.body.canteenName, req.body.foodName, req.body.price)
+    await editPrice(req.body.canteenName, req.body.category , req.body.foodName, req.body.price)
     res.status(200)
 })
 
 menuRoute.post('/addItem', async (req, res) => {
-    const menu = await addItem(req.body.canteenName, req.body.foodName, req.body.price)
+    await addItem(req.body.canteenName, req.body.category, req.body.foodName, req.body.price)
+    res.status(200)
+})
+
+menuRoute.delete('/deleteItem', async (req, res) => {
+    await deleteItem(req.body.canteenName, req.body.category, req.body.foodName)
     res.status(200)
 })
 
