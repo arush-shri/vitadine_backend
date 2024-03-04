@@ -6,16 +6,18 @@ async function getMenu(canteenName){
     return result;
 }
 
-async function priceEdit(canteenName, foodName, price) {
+async function editPrice(canteenName, category, itemName, newPrice) {
     try {
         const canteenDB = database.collection(canteenName);
         
         const filter = {};
-        filter[`Indian Gravy.${foodName}`] = { $exists: true };
+        const update = { $set: { [`${category}.$[item].${itemName}`]: newPrice } };
         
-        const update = { "$set": { [`Indian Gravy.$.${foodName}`]: price } };
+        const options = {
+            arrayFilters: [{ 'item': { '$exists': true } }]
+        };
         
-        const result = await canteenDB.updateOne(filter, update);
+        const result = await canteenDB.updateOne(filter, update, options);
         
         if (result.modifiedCount === 1) {
             return true;
