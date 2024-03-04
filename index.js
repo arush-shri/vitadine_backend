@@ -1,9 +1,8 @@
 const express = require("express");
 const app = express();
 const router = express.Router();
-const signInUp = require("./controller/signInUpRoute");
-const taskRoutes = require("./controller/orderHandlerRoute");
-const userRoute = require("./controller/UserRoute")
+const orderRoutes = require("./controller/orderHandlerRoute");
+const menuRoute = require("./controller/menuHandlerRoute")
 const cors = require("cors");
 
 app.set("view engine", "ejs")
@@ -15,9 +14,9 @@ app.get('/', (req, res) => {
 });
 
 app.use("/routes", router);
-app.use("/signinup", signInUp);
-app.use("/task", taskRoutes);
-app.use("/user", userRoute);
+app.use("/order", orderRoutes);
+app.use("/menu", menuRoute);
+
 const port = 4000;
 app.listen(port, () => {
     console.log("Server started at port 4000");
